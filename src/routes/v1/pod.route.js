@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const launchController = require('../../controllers/launch.controller');
+const podController = require('../../controllers/pod.controller');
 
 router
     .route('/')
-    .get(launchController.upcomingLaunches)
+    .get(podController.pod)
 
 module.exports = router;

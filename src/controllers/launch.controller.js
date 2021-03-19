@@ -5,7 +5,6 @@ const { upcomingLaunchesService } = require('../services');
 const upcomingLaunches = catchAsync(async(req, res) => {
 
     const upcomingLaunches = await upcomingLaunchesService.upcomingLaunches();
-    console.log(`From Controller : ${upcomingLaunches}`)
     res.send(upcomingLaunches.data[0])
 
 })
