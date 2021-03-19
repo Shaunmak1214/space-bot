@@ -79,7 +79,7 @@ client.on('message', async message => {
         message.channel.send(res.data.mission_name) */
         const upcomingLaunch = new Discord.MessageEmbed()
         .setColor('#7f32a8')
-        .setTitle('Upcoming Launches')
+        .setTitle('Upcoming Launches :rocket:')
         /* .setURL('https://discord.js.org/') */
         .setAuthor('Shaun Mak', 'https://avatars.githubusercontent.com/u/60981304?s=400&u=c6a2076fe4ad7ef03a71b1538cc4a8c0aa865376&v=4', 'https://avatars.githubusercontent.com/u/60981304?s=400&u=c6a2076fe4ad7ef03a71b1538cc4a8c0aa865376&v=4')
         .setDescription(`Don't you think blackholes sucking each other is hella interesting?`)
