@@ -13,7 +13,7 @@ const DYNO_URL = 'http://space-bot-2021.herokuapp.com/';
 const opts = {
   interval: 15,
   logging: false,
-  /* stopTimes: { start: '00:00', end: '06:00' } */
+  stopTimes: { start: '00:00', end: '06:00' }
 }
 
 server = app.listen(tempPORT, () => {
