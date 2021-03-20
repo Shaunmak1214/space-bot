@@ -4,12 +4,20 @@ const logger = require('./config/logger');
 const Discord = require('discord.js');
 const axios = require('axios');
 let express = require('express');
+const { wakeDyno } = require('heroku-keep-awake');
 
 const tempPORT = process.env.PORT || 5000;
 const client = new Discord.Client();
 const prefix = process.env.PREFIX;
+const DYNO_URL = 'http://space-bot-2021.herokuapp.com/';
+const opts = {
+  interval: 15,
+  logging: false,
+  /* stopTimes: { start: '00:00', end: '06:00' } */
+}
 
 server = app.listen(tempPORT, () => {
+  wakeDyno(DYNO_URL, opts);
   logger.info(`Listening to port ${tempPORT}`);
 });
 
