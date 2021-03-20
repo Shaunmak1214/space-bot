@@ -5,7 +5,7 @@ const Discord = require('discord.js');
 const axios = require('axios');
 let express = require('express');
 
-const tempPORT = 3000
+const tempPORT = process.env.PORT || 5000;
 const client = new Discord.Client();
 const prefix = process.env.PREFIX;
 
