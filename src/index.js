@@ -13,6 +13,10 @@ server = app.listen(tempPORT, () => {
   logger.info(`Listening to port ${tempPORT}`);
 });
 
+process.on('uncaughtException', function (err) {
+  console.log(err);
+});
+
 client.once('ready', () => {
 
   console.log(`Ready!`);
