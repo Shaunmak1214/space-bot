@@ -116,7 +116,7 @@ client.on('message', async message => {
 
   }else if(message.content.startsWith(`${prefix}pod`)){
 
-    const apiEndPoint = `http://localhost:3000/v1/pod`
+    const apiEndPoint = `http://space-bot-2021.herokuapp.com/v1/pod`
 
     axios
       .get(apiEndPoint)
