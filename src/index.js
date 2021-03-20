@@ -1,16 +1,17 @@
 const app = require('./app');
-const config = require('./config/config');
+/* const config = require('./config/config'); */
 const logger = require('./config/logger');
 const Discord = require('discord.js');
 const axios = require('axios');
 let express = require('express');
 
-server = app.listen(config.port, () => {
-  logger.info(`Listening to port ${config.port}`);
-});
-
+const tempPORT = process.env.PORT
 const client = new Discord.Client();
 const prefix = process.env.PREFIX;
+
+server = app.listen(tempPORT, () => {
+  logger.info(`Listening to port ${tempPORT}`);
+});
 
 client.once('ready', () => {
 
