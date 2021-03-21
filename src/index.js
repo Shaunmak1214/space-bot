@@ -160,6 +160,62 @@ client.on('message', async message => {
 
       })
 
+  }else if(message.content.startsWith(`${prefix}news`)){
+
+    const apiEndPoint = `http://localhost:5000/v1/news`
+
+    axios
+      .get(apiEndPoint)
+      .then((res) => {
+
+        console.log(res.data)
+
+        if(res.data.abstract.length > 1024){
+
+          var truncatedAbstract = `${res.data.abstract.substring(0, 900)} ... [read more](${res.data.url})`
+
+        }else{
+
+          var truncatedAbstract = res.data.abstract
+
+        }
+
+        var imgUrl = `https:${res.data.thumbnail_retina}`
+
+         res.status == 200 ? message.channel.send("Positive Data, Restructuring ... ") : message.channel.send("Data NEGATIVE")
+        const news = new Discord.MessageEmbed()
+        .setColor('#7f32a8')
+        .setTitle('News of The Day :newspaper:')
+        .setAuthor('Shaun Mak', 'https://avatars.githubusercontent.com/u/60981304?s=400&u=c6a2076fe4ad7ef03a71b1538cc4a8c0aa865376&v=4', 'https://avatars.githubusercontent.com/u/60981304?s=400&u=c6a2076fe4ad7ef03a71b1538cc4a8c0aa865376&v=4')
+        .setDescription(`Gravitational Lensing is super COOL [check it out](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiE7pWvsrzvAhVQzjgGHd9xDoMQFjAHegQIDxAD&url=https%3A%2F%2Fwww.science.org.au%2Fcurious%2Fspace-time%2Fgravitational-lensing%23%3A~%3Atext%3DAs%2520the%2520light%2520emitted%2520by%2CThis%2520is%2520called%2520gravitational%2520lensing.&usg=AOvVaw1PD03ubrVhO27377ESR6Bq)`)
+        .addFields(
+  
+            { name: '\u200B', value: '\u200B' },
+            { name: 'News:', value: `${res.data.name} : ${res.data.news_id}` },
+            { name: 'Publication Date: ', value: `${res.data.publication}` },
+            { name: 'Details:', value: `${truncatedAbstract}` },
+            { name: 'Mission', value: `${res.data.mission}` },
+            { name: '\u200B', value: '\u200B' },
+            { name: 'Full Content at: ', value: `${res.data.url}` },
+            { name: '\u200B', value: '\u200B' },
+  
+        )
+        .setImage(`${imgUrl}`)
+        /* console.log(`http:${res.data.thumbnail}`) */
+        .setTimestamp()
+        .setFooter('Sent from space-bot ~ "Do not go gentle into that goodnight"', 'https://avatars.githubusercontent.com/u/60981304?s=400&u=c6a2076fe4ad7ef03a71b1538cc4a8c0aa865376&v=4', 'https://avatars.githubusercontent.com/u/60981304?s=400&u=c6a2076fe4ad7ef03a71b1538cc4a8c0aa865376&v=4');
+  
+        console.log(`${res.data.thumbnail_retina}`)
+
+        message.channel.send(news);
+
+      }) 
+      .catch(err => {
+
+        message.channel.send(`Error getting datas from shit servers ... servers error: ${err}`)
+
+      })
+
   }
   
 });
