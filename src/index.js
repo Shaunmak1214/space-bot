@@ -162,7 +162,7 @@ client.on('message', async message => {
 
   }else if(message.content.startsWith(`${prefix}news`)){
 
-    const apiEndPoint = `http://localhost:5000/v1/news`
+    const apiEndPoint = `http://space-bot-2021.herokuapp.com/v1/news`
 
     axios
       .get(apiEndPoint)
