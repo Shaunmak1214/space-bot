@@ -130,7 +130,15 @@ client.on('message', async message => {
       .get(apiEndPoint)
       .then((res) => {
 
-        console.log()
+        if(res.data.explanation.length > 1024){
+
+          var truncatedExplanation = `${res.data.explanation.substring(0, 900)} ... [read more](${res.data.url})`
+
+        }else{
+
+          var truncatedExplanation = res.data.explanation
+
+        }
 
         res.status == 200 ? message.channel.send("Positive Data, Restructuring ... ") : message.channel.send("Data NEGATIVE")
         const pod = new Discord.MessageEmbed()
@@ -143,7 +151,7 @@ client.on('message', async message => {
             { name: '\u200B', value: '\u200B' },
             { name: 'Image Title:', value: `${res.data.title}` },
             { name: 'Captured date: ', value: `${res.data.date}` },
-            /* { name: 'Explanation: ', value: `${res.data.explanation}` }, */
+            { name: 'Explanation: ', value: `${truncatedExplanation}` },
             { name: '\u200B', value: '\u200B' },
   
         )
