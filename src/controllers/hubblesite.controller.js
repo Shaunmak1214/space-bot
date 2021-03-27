@@ -4,7 +4,7 @@ const { hubblenewsService } = require('../services');
 
 const hubblenews = catchAsync(async(req, res) => {
 
-    const hubblenews = await hubblenewsService.hubblesiteLatestNews();
+    const hubblenews = await hubblenewsService.hubblesiteNewsAll();
     res.send(hubblenews.data)
 
 })
