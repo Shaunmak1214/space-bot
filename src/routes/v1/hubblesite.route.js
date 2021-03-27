@@ -6,4 +6,8 @@ router
     .route('/')
     .get(hubblesiteController.hubblenews)
 
+router
+    .route('/latest')
+    .get(hubblesiteController.hubblenewsLatest)
+
 module.exports = router;
