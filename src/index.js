@@ -224,6 +224,58 @@ client.on('message', async message => {
 
       })
 
+  }else if(message.content.startsWith(`${prefix}allnews`)){
+
+    const apiEndPoint = `http://space-bot-2021.herokuapp.com/v1/news/`
+
+    axios
+      .get(apiEndPoint)
+      .then((res) => {
+
+        /* console.log(res.data) */
+
+        res.status == 200 ? message.channel.send("Positive Data, Give me a min ~.~ ") : message.channel.send("Data NEGATIVE")
+        const news = new Discord.MessageEmbed()
+        .setColor('#7f32a8')
+        .setTitle('All News of The Day :newspaper:')
+        .setAuthor('Shaun Mak', 'https://avatars.githubusercontent.com/u/60981304?s=400&u=c6a2076fe4ad7ef03a71b1538cc4a8c0aa865376&v=4', 'https://avatars.githubusercontent.com/u/60981304?s=400&u=c6a2076fe4ad7ef03a71b1538cc4a8c0aa865376&v=4')
+        .setDescription(`Gravitational Lensing is super COOL [check it out](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiE7pWvsrzvAhVQzjgGHd9xDoMQFjAHegQIDxAD&url=https%3A%2F%2Fwww.science.org.au%2Fcurious%2Fspace-time%2Fgravitational-lensing%23%3A~%3Atext%3DAs%2520the%2520light%2520emitted%2520by%2CThis%2520is%2520called%2520gravitational%2520lensing.&usg=AOvVaw1PD03ubrVhO27377ESR6Bq)`)
+        .setTimestamp()
+        .setFooter('Sent from space-bot ~ "Do not go gentle into that goodnight"', 'https://avatars.githubusercontent.com/u/60981304?s=400&u=c6a2076fe4ad7ef03a71b1538cc4a8c0aa865376&v=4', 'https://avatars.githubusercontent.com/u/60981304?s=400&u=c6a2076fe4ad7ef03a71b1538cc4a8c0aa865376&v=4');
+  
+        for(var i=0; i<5; i++){
+
+          if(res.data[i].abstract.length > 1024){
+
+            var truncatedAbstract = `${res.data[i].abstract.substring(0, 900)} ... [read more](${res.data[i].url})`
+  
+          }else{
+  
+            var truncatedAbstract = res.data[i].abstract
+  
+          }
+
+          news.addFields( 
+            { name: '\u200B', value: '\u200B' },
+            { name: 'Name', value: `${res.data[i].name}` },
+            { name: 'url', value: `${res.data[i].url}` },
+            { name: 'Publication', value: `${res.data[i].publication}` },
+            { name: 'Abstract', value: `${truncatedAbstract}` },
+            { name: '\u200B', value: '-------------------------------------------------------------------------------------' },
+          )
+        }
+        
+        message.channel.send(news);
+        /* message.react('◀️');
+        message.react('◀️');  */
+
+      }) 
+      .catch(err => {
+
+        message.channel.send(`Error getting datas from shit servers ... servers error: ${err}`)
+
+      })
+
   }
   
 });
