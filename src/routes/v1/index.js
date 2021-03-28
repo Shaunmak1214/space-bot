@@ -5,11 +5,18 @@ const docsRoute = require('./docs.route');
 const upcomingLaunchesRoute = require('./launch.route');
 const podRoute = require('./pod.route');
 const hubblesiteRoute = require('./hubblesite.route');
+const defaultRoute = require('./default.route');
 const config = require('../../config/config');
 
 const router = express.Router();
 
 const defaultRoutes = [
+  {
+
+    path: '/',
+    route: defaultRoute,
+
+  },
   {
     path: '/auth',
     route: authRoute,
