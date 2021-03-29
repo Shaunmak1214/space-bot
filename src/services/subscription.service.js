@@ -5,19 +5,27 @@ const newSubscribe = async(req) => {
 
     /* console.log(req) */
 
-    const newSubscriber = new Subscription({
+    let subscribed = Subscription.findOne({ _id }, {"discord_user_id" : req.discord_user_id})
 
-        discord_user_id: req.discord_user_id,
-        subscription: true
+    console.log(subscribed._id)
 
-    })
-
-    console.log(newSubscriber)
-    let saved = await newSubscriber.save();
-    if(saved){
-        return newSubscriber
+    if(subscribed._id != undefined){
+        console.log('already sub')
+        return 'Already Subscribed'
     }else{
-        return 'failed'
+        const newSubscriber = new Subscription({
+
+            discord_user_id: req.discord_user_id,
+            subscription: true
+    
+        })
+
+        let saved = await newSubscriber.save();
+        if(saved){
+            return newSubscriber
+        }else{
+            return 'failed'
+        }
     }
 
 }

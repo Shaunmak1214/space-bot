@@ -4,8 +4,10 @@ const { podService } = require('../services');
 
 const pod = catchAsync(async(req, res) => {
 
+    var podArr = []
     const pod = await podService.pictureofday();
-    res.send(pod.data)
+    podArr.push(pod.data)
+    res.send(podArr)
 
 })
 

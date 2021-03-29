@@ -49,6 +49,12 @@ client.on("ready", () =>{
 
 });
 
+client.on('messageReactionAdd', async (reaction, user) => {
+
+  console.log(reaction.message.content)
+
+})
+
 client.on('message', async message => {
 
   var now = new Date();
