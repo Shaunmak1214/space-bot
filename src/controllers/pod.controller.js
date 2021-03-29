@@ -6,8 +6,9 @@ const pod = catchAsync(async(req, res) => {
 
     var podArr = []
     const pod = await podService.pictureofday();
-    podArr.push(pod.data)
-    res.send(podArr)
+    /* podArr.push(pod.data)
+    res.send(podArr) */
+    res.send(pod.data)
 
 })
 
