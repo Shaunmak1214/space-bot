@@ -5,3 +5,4 @@ module.exports.launchController = require('./launch.controller');
 module.exports.podController = require('./pod.controller');
 module.exports.hubblesiteController = require('./hubblesite.controller');
 module.exports.snanewsController = require('./sna.controller');
+module.exports.subscriptionController = require('./subscription.controller');

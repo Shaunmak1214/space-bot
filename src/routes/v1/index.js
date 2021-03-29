@@ -5,6 +5,7 @@ const docsRoute = require('./docs.route');
 const upcomingLaunchesRoute = require('./launch.route');
 const podRoute = require('./pod.route');
 const hubblesiteRoute = require('./hubblesite.route');
+const subscriptionRoute = require('./subscription.route');
 const defaultRoute = require('./default.route');
 const config = require('../../config/config');
 
@@ -34,9 +35,12 @@ const defaultRoutes = [
     route: podRoute,
   },
   {
-
     path: '/news',
     route: hubblesiteRoute,
+  },
+  {
+    path: '/subscribe',
+    route: subscriptionRoute,
   },
 ];
 
