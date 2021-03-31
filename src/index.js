@@ -296,7 +296,7 @@ client.on('message', async message => {
 
   }else if(message.content.startsWith(`${prefix}subscribe`)){
 
-    const apiEndPoint = `http://localhost:3000/v1/subscribe/`
+    const apiEndPoint = `http://space-bot-2021.herokuapp.com/v1/subscribe/`
     let discord_user_id = message.author.id;
     let name = message.author.display_name;
 
