@@ -6,7 +6,6 @@ const axios = require('axios');
 let express = require('express');
 const { wakeDyno } = require('heroku-keep-awake');
 const { subscribe } = require('./controllers/subscription.controller');
-
 const tempPORT = process.env.PORT || 5000;
 const client = new Discord.Client();
 const prefix = process.env.PREFIX;
@@ -16,6 +15,7 @@ const opts = {
   logging: false,
   stopTimes: { start: '00:00', end: '01:00' }
 }
+const quotesAPI = 'https://quotescrapper.herokuapp.com/random'
 
 server = app.listen(tempPORT, () => {
   wakeDyno(DYNO_URL, opts);
@@ -25,6 +25,20 @@ server = app.listen(tempPORT, () => {
 process.on('uncaughtException', function (err) {
   console.log(err);
 });
+
+const getQuote = () => {
+  return new Promise(quote => {
+    axios
+    .get(quotesAPI)
+    .then((res) => {
+      quote(res.data.quote)
+    })
+    .catch((err) =>{
+      console.log(err)
+      quote('Do not go gentle into that goodnight')
+    })
+  });
+}
 
 client.once('ready', () => {
 
@@ -92,15 +106,13 @@ client.on('message', async message => {
 
     axios
       .get(apiEndPoint)
-      .then((res) => {
+      .then(async (res) => {
 
+        const quote = await getQuote();
         res.status == 200 ? message.channel.send("Positive Data, Restructuring ... ") : message.channel.send("Data NEGATIVE")
-/*         console.log(res.data.mission_name)
-        message.channel.send(res.data.mission_name) */
         const upcomingLaunch = new Discord.MessageEmbed()
         .setColor('#7f32a8')
         .setTitle('Upcoming Launches :rocket:')
-        /* .setURL('https://discord.js.org/') */
         .setAuthor('Shaun Mak', 'https://avatars.githubusercontent.com/u/60981304?s=400&u=c6a2076fe4ad7ef03a71b1538cc4a8c0aa865376&v=4', 'https://avatars.githubusercontent.com/u/60981304?s=400&u=c6a2076fe4ad7ef03a71b1538cc4a8c0aa865376&v=4')
         .setDescription(`Don't you think blackholes sucking each other is hella interesting?`)
         /* .setThumbnail('https://avatars.githubusercontent.com/u/60981304?s=400&u=c6a2076fe4ad7ef03a71b1538cc4a8c0aa865376&v=4') */
@@ -118,7 +130,7 @@ client.on('message', async message => {
         )
         .setImage('https://cdn.mos.cms.futurecdn.net/4Vv43ekp8QVwL95So7Z8sb-1024-80.jpg.webp')
         .setTimestamp()
-        .setFooter('Sent from space-bot ~ "Do not go gentle into that goodnight"', 'https://avatars.githubusercontent.com/u/60981304?s=400&u=c6a2076fe4ad7ef03a71b1538cc4a8c0aa865376&v=4', 'https://avatars.githubusercontent.com/u/60981304?s=400&u=c6a2076fe4ad7ef03a71b1538cc4a8c0aa865376&v=4');
+        .setFooter(`Sent from space-bot ~ "${quote}"`, 'https://avatars.githubusercontent.com/u/60981304?s=400&u=c6a2076fe4ad7ef03a71b1538cc4a8c0aa865376&v=4', 'https://avatars.githubusercontent.com/u/60981304?s=400&u=c6a2076fe4ad7ef03a71b1538cc4a8c0aa865376&v=4');
   
         message.channel.send(upcomingLaunch);
 
