@@ -5,7 +5,6 @@ const Discord = require('discord.js');
 const axios = require('axios');
 let express = require('express');
 const { wakeDyno } = require('heroku-keep-awake');
-const { subscribe } = require('./controllers/subscription.controller');
 const tempPORT = process.env.PORT || 5000;
 const client = new Discord.Client();
 const prefix = process.env.PREFIX;
@@ -299,7 +298,7 @@ client.on('message', async message => {
 
     const apiEndPoint = `http://localhost:3000/v1/subscribe/`
     let discord_user_id = message.author.id;
-    let name = message.author.name;
+    let name = message.author.display_name;
 
     let newSubscribe = {
       discord_user_id: discord_user_id
@@ -312,7 +311,12 @@ client.on('message', async message => {
         let subscribed = new Discord.MessageEmbed()
 
         if(res.status == 200)
-          
+
+          if(res.data == "1"){
+            message.channel.send(`${name} is already a subscribed user`)
+            return
+          }
+
           subscribed
             .setColor('#7f32a8')
             .setTitle('New Subscriber !!!')

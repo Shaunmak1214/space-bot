@@ -2,22 +2,12 @@ const httpStatus = require('http-status');
 const { Subscription } = require ('../models');
 
 const newSubscribe = async(req) => {
+    let subscribed = await Subscription.find({discord_user_id : req.discord_user_id})
 
-    /* console.log(req) */
-
-    let subscribed = Subscription.findOne({ _id }, {"discord_user_id" : req.discord_user_id})
-
-    console.log(subscribed._id)
-
-    if(subscribed._id != undefined){
-        console.log('already sub')
-        return 'Already Subscribed'
-    }else{
+    if(subscribed.length === 0){
         const newSubscriber = new Subscription({
-
             discord_user_id: req.discord_user_id,
             subscription: true
-    
         })
 
         let saved = await newSubscriber.save();
@@ -26,8 +16,9 @@ const newSubscribe = async(req) => {
         }else{
             return 'failed'
         }
+    }else{
+        return "1"
     }
-
 }
 
 module.exports = {

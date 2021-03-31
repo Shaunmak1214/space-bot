@@ -6,7 +6,7 @@ const subscribe = catchAsync(async(req, res) => {
 
     /* console.log(req.body) */
     const subscription = await subscriptionService.newSubscribe(req.body)
-    res.send(subscription.data)
+    res.send(subscription)
 
 })
 
