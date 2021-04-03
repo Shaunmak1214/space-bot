@@ -4,6 +4,7 @@ const logger = require('./config/logger');
 const Discord = require('discord.js');
 const axios = require('axios');
 let express = require('express');
+const cron = require('node-cron');
 const { wakeDyno } = require('heroku-keep-awake');
 const tempPORT = process.env.PORT || 5000;
 const client = new Discord.Client();
@@ -23,6 +24,56 @@ server = app.listen(tempPORT, () => {
 
 process.on('uncaughtException', function (err) {
   console.log(err);
+});
+
+let newsIdNow;
+// Schedule tasks to be run on the server.
+cron.schedule('*/1 * * * *', () => {
+  console.log('running a task every one minutes');
+  axios
+  .get('http://space-bot-2021.herokuapp.com/v1/snanews')
+  .then((res) => {
+    if(res.data[0].id != newsIdNow){
+      console.log('latest news detected')
+      newsIdNow = res.data[0].id
+      const latestNews = new Discord.MessageEmbed()
+      .setColor('#7f32a8')
+      .setTitle('Latest News :newspaper:')
+      .setAuthor('Shaun Mak', 'https://avatars.githubusercontent.com/u/60981304?s=400&u=c6a2076fe4ad7ef03a71b1538cc4a8c0aa865376&v=4', 'https://avatars.githubusercontent.com/u/60981304?s=400&u=c6a2076fe4ad7ef03a71b1538cc4a8c0aa865376&v=4')
+      .setDescription(`Gravitational Lensing is super COOL [check it out](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiE7pWvsrzvAhVQzjgGHd9xDoMQFjAHegQIDxAD&url=https%3A%2F%2Fwww.science.org.au%2Fcurious%2Fspace-time%2Fgravitational-lensing%23%3A~%3Atext%3DAs%2520the%2520light%2520emitted%2520by%2CThis%2520is%2520called%2520gravitational%2520lensing.&usg=AOvVaw1PD03ubrVhO27377ESR6Bq)`)
+      .setTimestamp()
+      .setFooter('Sent from space-bot ~ "Do not go gentle into that goodnight"', 'https://avatars.githubusercontent.com/u/60981304?s=400&u=c6a2076fe4ad7ef03a71b1538cc4a8c0aa865376&v=4', 'https://avatars.githubusercontent.com/u/60981304?s=400&u=c6a2076fe4ad7ef03a71b1538cc4a8c0aa865376&v=4');
+
+      if(res.data[0].summary.length > 1024){
+
+        var truncatedAbstract = `${res.data[0].summary.substring(0, 900)} ... [read more](${res.data[0].url})`
+
+      }else{
+
+        var truncatedAbstract = res.data[0].summary
+
+      }
+
+      latestNews.addFields( 
+        { name: '\u200B', value: '\u200B' },
+        { name: 'Name', value: `${res.data[0].title}` },
+        { name: 'url', value: `${res.data[0].url}` },
+        { name: 'Publication', value: `${res.data[0].publication}` },
+        { name: 'Abstract', value: `${truncatedAbstract}` },
+      )
+      
+      .setImage(`${res.data[0].imageUrl}`)
+
+      /* message.channel.send(latestNews); */
+      client.channels.cache.forEach(channel => {
+        console.log(channel)
+        if(channel.name === 'general') channel.send(latestNews).catch(console.error)
+      })
+    }
+  })
+  .catch((err) => {
+    console.log(err)
+  })
 });
 
 const getQuote = () => {
