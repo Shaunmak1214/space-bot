@@ -28,8 +28,8 @@ process.on('uncaughtException', function (err) {
 
 let newsIdNow;
 // Schedule tasks to be run on the server.
-cron.schedule('*/1 * * * *', () => {
-  console.log('running a task every one minutes');
+cron.schedule('*/5 * * * *', () => {
+  console.log('running a task every 5 minutes');
   axios
   .get('http://space-bot-2021.herokuapp.com/v1/snanews')
   .then((res) => {

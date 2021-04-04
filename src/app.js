@@ -52,6 +52,11 @@ if (config.env === 'production') {
 
 // v1 api routes
 app.use('/v1', routes);
+
+app.get('/',(req,res) => {
+  return res.send('Dont go gentle into that goodnight ~ Space Bot');
+});
+
 /*
 app.use(app.router);
 routes.initialize(app); */
