@@ -8,8 +8,16 @@ const snaNewsAll = async() => {
 
 };
 
+const snaNewsCounted = async(start, limit) => {
+
+    const url = `https://www.spaceflightnewsapi.net/api/v2/articles?_start=${start}&_limit=${limit}`
+    return await axios.get(url, {})
+
+}
+
 module.exports = {
 
-    snaNewsAll
+    snaNewsAll,
+    snaNewsCounted
 
 }
