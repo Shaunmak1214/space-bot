@@ -1,5 +1,7 @@
 const app = require('./app');
 /* const config = require('./config/config'); */
+let mongoose = require('mongoose')
+require('dotenv').config()
 const logger = require('./config/logger');
 const Discord = require('discord.js');
 const axios = require('axios');
@@ -16,6 +18,14 @@ const opts = {
   stopTimes: { start: '00:00', end: '01:00' }
 }
 const quotesAPI = 'https://quotescrapper.herokuapp.com/random'
+
+mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true})
+.then(()=>{
+  console.log("Connected to the Database. Yay!");
+})
+.catch(err => {
+  console.log(err);
+});
 
 server = app.listen(tempPORT, () => {
   wakeDyno(DYNO_URL, opts);
