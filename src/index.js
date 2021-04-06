@@ -81,7 +81,7 @@ cron.schedule('*/5 * * * *', () => {
       })
 
       axios
-      .get('http://localhost:3000/v1/subscribe/all')
+      .get('http://space-bot-2021.herokuapp.com/v1/subscribe/all')
       .then((res) => {
         res.data.forEach(member => {
           console.log(member)
@@ -422,7 +422,7 @@ client.on('message', async message => {
 
   }else if(message.content.startsWith(`${prefix}sendAll`)){
     axios
-      .get('http://localhost:3000/v1/subscribe/all')
+      .get('http://space-bot-2021.herokuapp.com/v1/subscribe/all')
       .then((res) => {
         res.data.forEach(member => {
           console.log(member)
