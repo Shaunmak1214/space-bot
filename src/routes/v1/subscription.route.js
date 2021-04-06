@@ -6,4 +6,8 @@ router
     .route('/')
     .post(subscriptionController.subscribe)
 
+router
+    .route('/all')
+    .get(subscriptionController.findallSubscribers)
+
 module.exports = router;

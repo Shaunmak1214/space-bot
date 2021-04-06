@@ -10,8 +10,16 @@ const subscribe = catchAsync(async(req, res) => {
 
 })
 
+const findallSubscribers = catchAsync(async(req, res) => {
+
+    const subscribers = await subscriptionService.findAllSubscribers()
+    res.send(subscribers)
+
+})
+
 module.exports = {
 
-    subscribe
+    subscribe,
+    findallSubscribers
 
 }
