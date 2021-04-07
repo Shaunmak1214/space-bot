@@ -4,9 +4,15 @@ const { subscriptionService } = require('../services')
 
 const subscribe = catchAsync(async(req, res) => {
 
-    /* console.log(req.body) */
     const subscription = await subscriptionService.newSubscribe(req.body)
     res.send(subscription)
+
+})
+
+const unSubscribe = catchAsync(async(req, res) => {
+
+    const unSubscription = await subscriptionService.deleteSubscriber(req.body)
+    res.send(unSubscription)
 
 })
 
@@ -20,6 +26,7 @@ const findallSubscribers = catchAsync(async(req, res) => {
 module.exports = {
 
     subscribe,
-    findallSubscribers
+    findallSubscribers,
+    unSubscribe
 
 }

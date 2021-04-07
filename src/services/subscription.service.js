@@ -21,30 +21,18 @@ const newSubscribe = async(req) => {
     }
 }
 
-const updateSubscriber = async(req) => {
-    let subscribed = await Subscription.findOne({discord_user_id : req.discord_user_id})
-
-    if(subscribed.length === 0){
-        const newSubscriber = new Subscription({
-            discord_user_id: req.discord_user_id,
-            subscription: true
-        })
-
-        let saved = await newSubscriber.save();
-        if(saved){
-            return newSubscriber
+const deleteSubscriber = async(req) => {
+    Subscription.findOneAndDelete({discord_user_id : req.discord_user_id}, function(err, res){
+        if(err){
+            console.log(err)
         }else{
-            return 'failed'
+            console.log('Deleted User :', docs);
         }
-    }else{
-        return "1"
-    }
+    })
 }
 
 const findAllSubscribers = async() => {
-    console.log("here1")
     let subscriber = await Subscription.find()
-
     if(subscriber.length === 0){
         return 'Nothing Found'
     }else{
@@ -55,6 +43,7 @@ const findAllSubscribers = async() => {
 module.exports = {
 
     newSubscribe,
-    findAllSubscribers
+    findAllSubscribers,
+    deleteSubscriber
 
 }

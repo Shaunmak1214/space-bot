@@ -7,6 +7,10 @@ router
     .post(subscriptionController.subscribe)
 
 router
+    .route('/')
+    .delete(subscriptionController.unSubscribe)
+
+router
     .route('/all')
     .get(subscriptionController.findallSubscribers)
 
