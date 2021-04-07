@@ -22,13 +22,13 @@ const newSubscribe = async(req) => {
 }
 
 const deleteSubscriber = async(req) => {
-    Subscription.findOneAndDelete({discord_user_id : req.discord_user_id}, function(err, res){
-        if(err){
-            console.log(err)
-        }else{
-            console.log('Deleted User :', docs);
-        }
-    })
+    console.log(req.discord_user_id)
+    let unSubscription = await Subscription.findOneAndDelete({discord_user_id : req.discord_user_id})
+    if(unSubscription){
+        return 'deleted'
+    }else{
+        return 'failed'
+    }
 }
 
 const findAllSubscribers = async() => {

@@ -3,12 +3,12 @@ const router = express.Router();
 const { subscriptionController } = require('../../controllers')
 
 router
-    .route('/')
-    .post(subscriptionController.subscribe)
+    .route('/delete')
+    .post(subscriptionController.unSubscribe)
 
 router
     .route('/')
-    .delete(subscriptionController.unSubscribe)
+    .post(subscriptionController.subscribe)
 
 router
     .route('/all')

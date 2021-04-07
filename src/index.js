@@ -422,23 +422,18 @@ client.on('message', async message => {
 
   }else if(message.content.startsWith(`${prefix}unsub`)){
 
-    const apiEndPoint = `http://space-bot-2021.herokuapp.com/v1/subscribe/`
+    const apiEndPoint = `http://space-bot-2021.herokuapp.com/v1/subscribe/delete`
     let discord_user_id = message.author.id;
     let name = message.author.username;
-
-    let newSubscribe = {
+    let unSubscribeBody = {
       discord_user_id: discord_user_id
     }
-
     axios
-      .delete(apiEndPoint, newSubscribe)
+      .post(apiEndPoint, unSubscribeBody)
       .then((res) =>{
-
         let subscribed = new Discord.MessageEmbed()
-
         if(res.status == 200)
-
-          if(res.data == "1"){
+          if(res.data == "deleted"){
             subscribed
               .setColor('#7f32a8')
               .setTitle('Sorry to see you go :cry: ')
